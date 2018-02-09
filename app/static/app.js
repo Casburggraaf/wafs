@@ -1,33 +1,32 @@
 // Create local scope
-(function() {
+{
+  'use strict'
   //Init Aplication
-  var app = {
-    init: function() {
+  const app = {
+    init() {
       routers.init();
     },
     rootElement: document.body
   };
 
   // Handle routes and states
-  var routers = {
-    init: function() {
+  const routers = {
+    init() {
       // Check if the window already has a hash and change active sections corspodending the hash
-      if (window.location.hash) {
-        sections.toggle(location.hash.substr(1));
-      }
+      location.hash && sections.toggle(location.hash.substr(1));
 
       // Listing to hashchange
-      window.addEventListener("hashchange",function(){
+      hashchange = () => {
         var route = location.hash.substr(1);
         sections.toggle(route);
-      });
+      };
     }
   }
 
   // Render / toggle sections
-  var sections = {
+  const sections = {
     sections: app.rootElement.querySelectorAll("body>section"),
-    toggle: function(route) {
+    toggle(route) {
       for (let i = 0; i < this.sections.length; i++) {
         this.sections[i].classList.remove("active");
         // Checking if the id is the same as the route
@@ -40,5 +39,4 @@
 
   // Start the Aplication
   app.init();
-
-})();
+};
