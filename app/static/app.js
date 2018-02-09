@@ -1,5 +1,6 @@
 // Create local scope
-(function() {
+{
+  'use strict'
   //Init Aplication
   const app = {
     init() {
@@ -12,15 +13,13 @@
   const routers = {
     init() {
       // Check if the window already has a hash and change active sections corspodending the hash
-      if (window.location.hash) {
-        sections.toggle(location.hash.substr(1));
-      }
+      location.hash && sections.toggle(location.hash.substr(1));
 
       // Listing to hashchange
-      window.addEventListener("hashchange",function(){
-        let route = location.hash.substr(1);
+      hashchange = () => {
+        var route = location.hash.substr(1);
         sections.toggle(route);
-      });
+      };
     }
   };
 
@@ -28,6 +27,7 @@
   const sections = {
     sections: app.rootElement.querySelectorAll("body>section"),
     toggle(route) {
+
       this.sections.forEach(function(el) {
         el.classList.remove("active");
         // Checking if the id is the same as the route
@@ -40,5 +40,4 @@
 
   // Start the Aplication
   app.init();
-
-})();
+};
