@@ -21,7 +21,7 @@
           sections.toggle("popular", "popular");
 
         },
-        // vangt af wat er achter de movie/ staat en geeft dit mee als 2de parameter aan toggle
+        // Get movie IDs and add it as second parameter in section.toggle
         "movie/:movieId": function (movieId) {
           sections.toggle("movieDetail", movieId);
         }
@@ -33,14 +33,14 @@
   const sections = {
     sectionsElements: app.rootElement.querySelectorAll("body>section"),
     init(){
-      // Een event listeren op het knopje, en voert nogmaals toggle uit voor referch van de pagina
+      // A event listener on the button, refreshes page
       this.sectionsElements[1].querySelector('#popular input').addEventListener("change",function () {
         xhr.filterBadMovies = this.checked;
         sections.toggle("popular", "popular");
       });
     },
     toggle(route, routeId) {
-      /// Zet de juiste section op active
+      // Sets the correct section to 'active'
       this.sectionsElements.forEach(function (el) {
         el.classList.remove("active");
         if (el.id === route) {
@@ -48,15 +48,15 @@
         }
       });
 
-      // Gaat de pagina's vullen met data van de api behalve op start pagina
+      // Fills the pages with data from the API except on the startpage
       if(route != "start"){
         this.loadPage(route, routeId);
       }
     },
     loadPage(route, routeId){
-      // Maakt een api request
+      // Makes an api request
       xhr.request(routeId).then(function(){
-        // Rendert de pagina nadat de api call is gelukt
+        // Renders the page after the api call resolves
         xhr.render(route, routeId);
       });
     },
@@ -75,7 +75,7 @@
     filterBadMovies: false,
     request(apiSearchParm){
       var _this = this;
-      // Maakt een promise voor de xml request
+      // Makes a promise for the xml request
       var promise = new Promise(function(resolve, reject) {
         var request = new XMLHttpRequest();
 
@@ -86,7 +86,7 @@
 
         request.onload = function() {
           if (request.status >= 200 && request.status < 400) {
-            // Zet de result json in het data atribuut
+            // Sets the JSON result in the data attribute
             _this.data = JSON.parse(request.responseText);
             resolve();
           }
@@ -100,7 +100,7 @@
       if (route === "popular") {
         // Checking if it a popular Search or Movie detail page
         if (xhr.filterBadMovies) {
-          // filtering if vote average is kleiner dan 6.5
+          // filtering if vote average is smaller than 6.5
           this.data.results = this.data.results.filter(function(obj){
             if (obj.vote_average > 6.5) {
               return true;
