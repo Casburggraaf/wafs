@@ -33,5 +33,10 @@ The course repo for 'Web App From Scratch'
 * DRY your code
 
 ## Pull Request
+#### Week 1
 * https://github.com/baskager/wafs/pull/3
 * https://github.com/hackshackshacks/wafs/pull/1
+
+#### Week 2
+* https://github.com/meesrutten/wafs/pull/2
+* https://github.com/moniac/wafs/pull/4
