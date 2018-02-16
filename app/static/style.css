@@ -1,18 +1,30 @@
 body {
-  background-color: grey;
-  padding: 3%;
+  background-color: #1A2A40;
   display: flex;
   flex-direction: column;
-  height: 97vh;
+  height: 99vh;
+  align-items: center;
+  color: #EBF4F7;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body > * {
+  max-width: 42em;
+  width: 90%;
 }
 
  #start img {
-  width: 90%;
-  max-height: 50vh;
+  width: 100%;
 }
 
 body>section:not(.active) {
   display: none;
+}
+
+section h1 {
+  margin-top: 4%;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 nav {
@@ -36,13 +48,53 @@ nav li:first-of-type {
   border-right: 1px solid white;
 }
 
-nav a {
-  color: white;
+a {
+  color: #EBF4F7;
 }
 
-a:visited {
-  color: inherit;
+#popularMovies a {
+  color: #EBF4F7;
 }
+
+#popularMovies a:visited {
+  color: #2474A6;
+}
+
+#popularMovies  {
+  list-style-type: none;
+}
+
+#popularMovies li{
+  margin-top: 5px;
+  padding: 0.5em; /* 20/16 */
+  border: solid 1px #EBF4F7;
+  line-height: 140%;
+}
+
+#popularMovies li:hover {
+  background-color: #2474A6;
+}
+#popularMovies li:hover a:visited {
+  color: #1A2A40;
+}
+
+#movieDetails img[data-bind="backdrop_path"] {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+}
+
+#movieDetails  h3 {
+  text-align: center;
+  font-size: 2em;
+}
+
+#movieDetails img[data-bind="poster_path"] {
+
+}
+
 
 nav #backButton {
   display: none;

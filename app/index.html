@@ -9,13 +9,13 @@
 </head>
 <body>
   <section class="active" id="start">
-    <h1>Start</h1>
-    <img src="https://unsplash.com/photos/YadCgbsLHcE/download?force=true" alt="">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+    <h1>Movies</h1>
+    <img src="https://unsplash.com/photos/23LET4Hxj_U/download?force=true" alt="">
+    <p>See the most pupulair movies of this time and see details about them!</p>
   </section>
   <section id="popular">
     <h1>Popular Movies</h1>
-    <input type="checkbox"><label form="">Don't show movies with a rating greater than 6.5</label>
+    <input type="checkbox" id="ratingCeckbox"><label for="ratingCeckbox">Don't show movies with a rating greater than 6.5</label>
     <ul id="popularMovies">
       <li><a data-bind="title"></a></li>
     </ul>
@@ -23,6 +23,7 @@
   <section id="movieDetail">
     <h1>Movie Detail</h1>
     <section id="movieDetails">
+      <img data-bind="backdrop_path">
       <h3><a data-bind="title" target="_blank"></a></h3>
       <img data-bind="poster_path">
       <h4>Overview</h4>

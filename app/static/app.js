@@ -139,7 +139,12 @@
           },
           poster_path: {
             src: function(params) {
-              return `https://image.tmdb.org/t/p/w185/${this.poster_path}`;
+              return `https://image.tmdb.org/t/p/w342/${this.poster_path}`;
+            }
+          },
+          backdrop_path: {
+            src: function(params) {
+              return `https://image.tmdb.org/t/p/original/${this.backdrop_path}`;
             }
           }
         };
