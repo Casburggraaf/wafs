@@ -13,7 +13,8 @@
     "gulp": "^3.9.1"
   },
   "xo": {
-    "space": "tab"
+    "space": "tab",
+    "space-before-function-paren": ["error", "never"]
   },
   "dependencies": {
     "xo": "^0.20.1"

@@ -2,11 +2,11 @@
 (function() {
   // Init Aplication
   const app = {
+    rootElement: document.body,
     init() {
+      content.init();
       routers.init();
-      sections.init();
-    },
-    rootElement: document.body
+    }
   };
 
   // Handle routes and states
@@ -15,25 +15,38 @@
       // Make routie config and requesting a xhr if needed
       routie({
         start: function() {
-          sections.toggle("start");
+          content.toggle("start");
         },
         popular: function() {
-          sections.toggle("popular", "popular");
+          content.toggle("popular", "popular");
           // Fills the pages with data from the API
-          if(Object.getOwnPropertyNames(xhr.dataPupular).length === 0) {
-            sections.loadPage("popular", "popular")
+          if(Object.getOwnPropertyNames(xhr.dataPupular).length != 0) {
+            content.renderPage("popular", "popular");
+          } else if (localStorage.getItem("popular")){
+            let temp = JSON.parse(localStorage.getItem("popular"));
+            console.log((new Date - new Date(temp.timestamp)));
+            if((new Date - new Date(temp.timestamp)) < 60000){
+              xhr.dataPupular = temp;
+              xhr.filterBadMovies();
+              content.renderPage("popular", "popular");
+            } else {
+              content.loadPage("popular", "popular");
+            }
           } else {
-            sections.renderPage("popular", "popular")
+            content.loadPage("popular", "popular");
           }
         },
         // Get movie IDs and add it as second parameter in section.toggle
         "movie/:movieId": function (movieId) {
-          sections.toggle("movieDetail", movieId);
+          content.toggle("movieDetail", movieId);
           // Fills the pages with data from the API
-          if(!xhr.dataDetail[movieId]){
-            sections.loadPage("movieDetail", movieId);
+          if(xhr.dataDetail[movieId]){
+            content.renderPage("movieDetail", movieId);
+          } else if(localStorage.getItem(movieId) != null) {
+            xhr.dataDetail[movieId] = JSON.parse(localStorage.getItem(movieId));
+            content.renderPage("movieDetail", movieId);
           } else {
-            sections.renderPage("movieDetail", movieId);
+            content.loadPage("movieDetail", movieId);
           }
         }
       });
@@ -41,13 +54,14 @@
   };
 
   // Render / toggle sections
-  const sections = {
+  const content = {
     sectionsElements: app.rootElement.querySelectorAll("body>section"),
+    filterBadMoviesCheck: false,
     init(){
       // A event listener on the button, refreshes page
       this.sectionsElements[1].querySelector('#popular input').addEventListener("change",function () {
-        xhr.filterBadMoviesCheck = this.checked;
-        sections.renderPage("popular", "popular");
+        content.filterBadMoviesCheck = this.checked;
+        content.renderPage("popular", "popular");
       });
     },
     toggle(route, routeId) {
@@ -63,7 +77,7 @@
       // Makes an api request
       xhr.request(routeId).then(function(){
         // Renders the page after the api call resolves
-        sections.renderPage(route, routeId);
+        content.renderPage(route, routeId);
       });
     },
     renderPage(route, apiSearchParm) {
@@ -81,7 +95,7 @@
 
         var target = this.sectionsElements[1].querySelector('#popularMovies');
         // Render Page (and check if filterd option is check if so show filterd data)
-        if (xhr.filterBadMoviesCheck) {
+        if (this.filterBadMoviesCheck) {
           Transparency.render(target, xhr.dataPupularFilterd.results, directives);
         } else {
           Transparency.render(target, xhr.dataPupular.results, directives);
@@ -113,7 +127,7 @@
         // Render Page
         Transparency.render(target, xhr.dataDetail[apiSearchParm], directives);
       }
-    }
+    },
   };
 
   const xhr = {
@@ -122,7 +136,6 @@
     dataPupular: {},
     dataPupularFilterd: {},
     dataDetail: {},
-    filterBadMoviesCheck: false,
     request(apiSearchParm){
       var _this = this;
       // Makes a promise for the xml request
@@ -141,11 +154,15 @@
             // Checking if it a popular Search or Movie detail page
             if (apiSearchParm === "popular") {
               _this.dataPupular = JSON.parse(request.responseText);
+              _this.dataPupular.timestamp = new Date;
+              console.log(_this.dataPupular.timestamp);
+              localStorage.setItem(`popular`, JSON.stringify(_this.dataPupular));
               _this.filterBadMovies();
               _this.releaseDateConvert();
             } else {
               _this.dataDetail.temp = JSON.parse(request.responseText);
               _this.dataDetail[_this.dataDetail.temp.id] = _this.dataDetail.temp;
+              localStorage.setItem(`${_this.dataDetail.temp.id}`, JSON.stringify(_this.dataDetail.temp));
             }
             resolve();
           }
