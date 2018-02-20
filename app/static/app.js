@@ -66,7 +66,7 @@
           template.renderPupular();
         }).catch(function(){
           content.togle("error");
-          document.querySelector('#error p').appendChild(document.createTextNode('There is propuly a problem with the api, please try again'));
+          document.querySelector('#error p').appendChild(document.createTextNode(`There is propuly a problem with the api, please try again, error: ${error}`));
         });
       } else if(route == "movieDetail"){
         api.requestDetail(movieiD).then(function(){
@@ -74,7 +74,7 @@
           template.renderDetail(movieiD);
         }).catch(function(error){
           content.toggle("error");
-          document.querySelector('#error p').appendChild(document.createTextNode(`There is propuly a problem with the api, please try again, error code: ${error}`));
+          document.querySelector('#error p').appendChild(document.createTextNode(`There is propuly a problem with the api, please try again, error: ${error}`));
         });
       }
     }
@@ -105,12 +105,16 @@
 
             resolve();
           } else {
-            reject()
+            reject(request.status);
           }
         };
 
         request.send();
       });
+
+      request.onerror = function() {
+        reject("Failed to proform api req");
+      };
 
       return promise;
     },
@@ -139,9 +143,8 @@
         };
 
         request.onerror = function() {
-          console.log("onerror");
-          reject();
-        }
+          reject("Failed to proform api req");
+        };
 
         request.send();
       });
