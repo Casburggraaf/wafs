@@ -60,26 +60,49 @@
     },
     getPage(route, movieiD){
       // Makes an api request
+      this.showLoader();
       if (route == "popular") {
         api.requestPopular().then(function(){
+          content.hideLoader(route);
           // Renders the page after the api call resolves
           template.renderPupular();
         }).catch(function(){
           content.togle("error");
-          document.querySelector('#error p').appendChild(document.createTextNode(`There is propuly a problem with the api, please try again, error: ${error}`));
+          document.querySelector('#error p').appendChild(document.createTextNode(`There is a posibile problem with the api, please try again, error: ${error}`));
         });
       } else if(route == "movieDetail"){
         api.requestDetail(movieiD).then(function(){
+          content.hideLoader(route);
           // Renders the page after the api call resolves
           template.renderDetail(movieiD);
         }).catch(function(error){
           content.toggle("error");
-          document.querySelector('#error p').appendChild(document.createTextNode(`There is propuly a problem with the api, please try again, error: ${error}`));
+          document.querySelector('#error p').appendChild(document.createTextNode(`There is a posibile problem with the api, please try again, error: ${error}`));
+        });
+      }
+    },
+    showLoader() {
+      document.body.style.setProperty('--loader-status', 'block');
+    },
+    hideLoader(route) {
+      if (route == "popular"){
+        document.body.style.setProperty('--loader-status', 'none');
+      }else if (route == "movieDetail") {
+        let images = this.sectionsElements[2].querySelectorAll('img[data-bind]');
+        let loadCount = 0;
+        images.forEach(function (el) {
+          el.addEventListener("load",function(){
+            loadCount += 1;
+            if(loadCount == images.length) {
+              document.body.style.setProperty('--loader-status', 'none');
+            }
+          });
         });
       }
     }
-  };
+  }
 
+// Request and handle api calls
   const api = {
     apiBasisUrl: "https://api.themoviedb.org/3/movie/",
     apiKey: "d9a167a57e748b4a804b41f0186b2339",
@@ -109,12 +132,12 @@
           }
         };
 
+        request.onerror = function() {
+          reject("Failed to proform api req");
+        };
+
         request.send();
       });
-
-      request.onerror = function() {
-        reject("Failed to proform api req");
-      };
 
       return promise;
     },
@@ -147,12 +170,20 @@
         };
 
         request.send();
+
+        /* LOADER SHOWCASE
+        setTimeout(function () {
+          request.send();
+        },2000);
+        */
+
       });
 
       return promise;
     }
   };
 
+// Data holder and some function for data manupulation
   const data = {
     dataPupular: {},
     dataPupularFilterd: {},
@@ -199,6 +230,7 @@
     }
   }
 
+// For rendering the templates
   const template = {
     renderPupular(){
       var directives = {
@@ -220,6 +252,7 @@
       }
     },
     renderDetail(movieId){
+      content.showLoader();
       var directives = {
         title: {
           href: function (params) {
@@ -243,9 +276,11 @@
       var target = content.sectionsElements[2].querySelector('#movieDetails');
       // Render Page
       Transparency.render(target, data.dataDetail[movieId], directives);
+      content.hideLoader("movieDetail");
     }
   };
 
+  // Misc utitles
   const utils = {
     calcReleaseDate(date) {
       date = date.split("-");

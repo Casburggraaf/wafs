@@ -1,3 +1,7 @@
+:root {
+  --loader-status:  none;
+}
+
 body {
   background-color: #1A2A40;
   display: flex;
@@ -94,10 +98,13 @@ a {
   font-size: 2em;
 }
 
-#movieDetails img[data-bind="poster_path"] {
-
+section.active img[alt="loaderGif"] {
+  display: var(--loader-status);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: scale(1.5);
 }
-
 
 nav #backButton {
   display: none;
