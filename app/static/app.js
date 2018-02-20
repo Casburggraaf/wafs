@@ -25,6 +25,12 @@
         "movie/:movieId": function (movieId) {
           content.toggle("movieDetail");
           data.checkDataSourceDetail(movieId)
+        },
+        "error": function(){
+          content.toggle("error");
+        },
+        "*": function(){
+          content.toggle("page404");
         }
       });
     }
@@ -58,11 +64,17 @@
         api.requestPopular().then(function(){
           // Renders the page after the api call resolves
           template.renderPupular();
+        }).catch(function(){
+          content.togle("error");
+          document.querySelector('#error p').appendChild(document.createTextNode('There is propuly a problem with the api, please try again'));
         });
       } else if(route == "movieDetail"){
         api.requestDetail(movieiD).then(function(){
           // Renders the page after the api call resolves
           template.renderDetail(movieiD);
+        }).catch(function(error){
+          content.toggle("error");
+          document.querySelector('#error p').appendChild(document.createTextNode(`There is propuly a problem with the api, please try again, error code: ${error}`));
         });
       }
     }
@@ -92,21 +104,24 @@
             data.releaseDateConvert();
 
             resolve();
+          } else {
+            reject()
           }
         };
+
         request.send();
       });
 
       return promise;
     },
-    requestDetail(apiSearchParm){
+    requestDetail(movieiD){
       var _this = this;
       // Makes a promise for the xml request
       var promise = new Promise(function(resolve, reject) {
         var request = new XMLHttpRequest();
 
         // Making the url and creating a GET request
-        var url = `${_this.apiBasisUrl}${apiSearchParm}?api_key=${_this.apiKey}`;
+        var url = `${_this.apiBasisUrl}${movieiD}?api_key=${_this.apiKey}`;
 
         request.open('GET', url, true);
 
@@ -118,8 +133,16 @@
             localStorage.setItem(`${data.dataDetail.temp.id}`, JSON.stringify(data.dataDetail.temp));
 
             resolve();
+          } else {
+            reject(request.status);
           }
         };
+
+        request.onerror = function() {
+          console.log("onerror");
+          reject();
+        }
+
         request.send();
       });
 
