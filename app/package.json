@@ -14,7 +14,8 @@
   },
   "xo": {
     "space": "tab",
-    "space-before-function-paren": ["error", "never"]
+    "space-before-function-paren": ["error", "never"],
+    "quotmark": "double"
   },
   "dependencies": {
     "xo": "^0.20.1"
