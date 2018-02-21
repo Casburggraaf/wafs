@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Movies</title>
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/style/style.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
   </section>
   <section id="popular">
     <h1>Popular Movies</h1>
-    <img src="static/loader.svg" alt="loaderGif">
+    <img src="static/style/loader.svg" alt="loaderGif">
     <input type="checkbox" id="ratingCeckbox"><label for="ratingCeckbox">Don't show movies with a rating greater than 6.5</label>
     <ul id="popularMovies">
       <li><a data-bind="title"></a></li>
@@ -25,7 +25,7 @@
   </section>
   <section id="movieDetail">
     <h1>Movie Detail</h1>
-    <img src="static/loader.svg" alt="loaderGif">
+    <img src="static/style/loader.svg" alt="loaderGif">
     <section id="movieDetails">
       <img data-bind="backdrop_path">
       <h3><a data-bind="title" target="_blank"></a></h3>
@@ -52,9 +52,9 @@
     <li><a href="#popular">Popular Movies</a></li>
     <li id="backButton"><a href="#popular">Back</a></li>
   </nav>
-  <script src="static/routie.js"></script>
-  <script src="static/transparency.min.js"></script>
-  <script src="static/app.js"></script>
+  <script src="static/js/modules/extern/routie.js"></script>
+  <script src="static/js/modules/extern/transparency.min.js"></script>
+  <script type="module" src="static/js/app.js"></script>
 </body>
 
 </html>
