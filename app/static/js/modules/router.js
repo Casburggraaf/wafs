@@ -1,5 +1,6 @@
 import content from "./content.js";
 import data from "./data.js";
+import template from "./template.js";
 
 // Handle routes and states
 const router = {
@@ -8,9 +9,11 @@ const router = {
     routie({
       ""() {
         content.toggle("start");
+        template.renderHome();
       },
       start() {
         content.toggle("start");
+        template.renderHome();
       },
       popular() {
         content.toggle("popular");

@@ -6,6 +6,10 @@ const utils = {
     date = new Date(date[0], parseInt(date[1] - 1), date[2]);
     const days = Math.floor((new Date() - date) / 86400000);
     return days;
+  },
+  randomNumberGen(endNumber) {
+    const tempCalc = Math.floor(Math.random() * endNumber);
+    return tempCalc;
   }
 };
 

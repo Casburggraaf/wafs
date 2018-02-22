@@ -1,9 +1,36 @@
 import content from "./content.js";
 import data from "./data.js";
+import utils from "./utils.js";
 
 
 // For rendering the templates
 const template = {
+  renderHome() {
+    // Set img src
+    const img = [
+      {
+        home_img: 'https://source.unsplash.com/23LET4Hxj_U/1600x900'
+      },
+      {
+        home_img: 'https://source.unsplash.com/IkSjU7Ij2xk/1600x900'
+      },
+      {
+        home_img: 'https://source.unsplash.com/4SLz_RCk6kQ/1600x900'
+      }
+    ];
+    const directives = {
+      home_img: {
+        src() {
+          return this.home_img;
+        }
+      }
+    };
+    // Set template target
+    const target = content.sectionsElements[0];
+    // Render Page
+    Transparency.render(target, img[utils.randomNumberGen(img.length)], directives);
+    // Set loader hide function on
+  },
   renderPupular() {
     // Set href's or special text for templating
     const directives = {
@@ -20,6 +47,7 @@ const template = {
     const target = content.sectionsElements[1].querySelector('#popularMovies');
     // Render Page (and check if filterd option is check if so show filterd data)
     if (content.filterBadMoviesCheck) {
+      console.log(data.dataPupularFilterd.results);
       Transparency.render(target, data.dataPupularFilterd.results, directives);
     } else {
       Transparency.render(target, data.dataPupular.results, directives);
