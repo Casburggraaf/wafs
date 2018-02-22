@@ -1,6 +1,16 @@
 # WAFS
 The course repo for 'Web App From Scratch'
 
+See the website live on https://casburggraaf.github.io/wafs/app
+
+On this website you can see the most popular movies with a detail page of the movie.
+
+The movie list, movie details en images are from [The Movie DB](https://www.themoviedb.org) except the image from the homepage, they fetch from [Unsplash](https://unsplash.com)
+
+## The API
+
+
+
 ## Advantages and disadvantages of JavaScript libraries/frameworks
 ### Advantages
 * Makkelijker moelijke aplicaties schrijven
