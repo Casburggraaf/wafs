@@ -27,7 +27,7 @@ const content = {
     // Request a api by a call to promise api.request
     if (route === "popular") {
       api.requestPopular().then(function () {
-        content.hideLoader(route);
+        content.hideLoader();
         // Renders the page after the api call resolves
         template.renderPupular();
       }).catch(function (error) {
@@ -37,7 +37,7 @@ const content = {
       });
     } else if (route === "movieDetail") {
       api.requestDetail(movieiD).then(function () {
-        content.hideLoader(route);
+        content.hideLoader();
         // Renders the page after the api call resolves
         template.renderDetail(movieiD);
       }).catch(function (error) {
@@ -51,13 +51,13 @@ const content = {
     // Set css varibale to show loader gif
     document.body.style.setProperty('--loader-status', 'block');
   },
-  hideLoader(route) {
-    // Hide loader gif
-    if (route === "popular") {
+  hideLoader() {
+    // Only hide when images from the page are loaded
+    const images = document.querySelector('.active').querySelectorAll('img');
+    // Check if page has images, if so check if images has loaded
+    if (images.length === 0) {
       document.body.style.setProperty('--loader-status', 'none');
-    } else if (route === "movieDetail") {
-      // Only hide when the 2 images from te detail page are loaded
-      const images = document.querySelector('.active').querySelectorAll('img');
+    } else {
       let loadCount = 0;
       images.forEach(function (el) {
         // Set event listeren to the images

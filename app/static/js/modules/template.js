@@ -31,7 +31,7 @@ const template = {
     // Render Page
     Transparency.render(target, img[utils.randomNumberGen(img.length)], directives);
     // Set loader hide function on
-    content.hideLoader("movieDetail");
+    content.hideLoader();
   },
   renderPupular() {
     // Set href's or special text for templating
@@ -82,7 +82,7 @@ const template = {
     // Render Page
     Transparency.render(target, data.dataDetail[movieId], directives);
     // Set loader hide function on
-    content.hideLoader("movieDetail");
+    content.hideLoader();
   }
 };
 
