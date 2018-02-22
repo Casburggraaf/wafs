@@ -14,7 +14,10 @@
   },
   "xo": {
     "space": "tab",
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": [
+      "error",
+      "never"
+    ],
     "quotmark": "double"
   },
   "dependencies": {

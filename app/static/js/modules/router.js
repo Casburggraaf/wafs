@@ -6,6 +6,9 @@ const router = {
   init() {
     // Routie config, toggle between pages and send request for data to data.checkDataSource
     routie({
+      ""() {
+        content.toggle("start");
+      },
       start() {
         content.toggle("start");
       },
