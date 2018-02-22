@@ -57,7 +57,7 @@ const content = {
       document.body.style.setProperty('--loader-status', 'none');
     } else if (route === "movieDetail") {
       // Only hide when the 2 images from te detail page are loaded
-      const images = this.sectionsElements[2].querySelectorAll('img[data-bind]');
+      const images = document.querySelector('.active').querySelectorAll('img');
       let loadCount = 0;
       images.forEach(function (el) {
         // Set event listeren to the images
