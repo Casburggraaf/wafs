@@ -29,7 +29,7 @@ The only requirement of the api is that you in the possession of a api key. The 
 ![Interaction Diagram](https://raw.githubusercontent.com/Casburggraaf/wafs/master/Interaction%20Diagram.png "")
 
 
-### libraries
+### Libraries
 * [Routie](http://projects.jga.me/routie/) For routing between pages
 * [Transparency](https://github.com/leonidas/transparency) For rending pages
 
