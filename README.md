@@ -45,7 +45,7 @@ To fix
 - Better contracts colour
 - A background on behind the text of the detail Page
 
-### Broadband internet
+#### Broadband internet
 When programming this website a lot of features where designed to improve the usage for users with slow network speed.
 - A loaderGif
 - Usage of locallstorage
@@ -56,7 +56,7 @@ What can improved
 - Low res images for slow speed networks
 - putting loadergif into the locallstorage
 
-### mouse/trackpad
+#### mouse/trackpad
 The website is usable without mouse an trackpad.
 What can be inproved
 - Nav on the top
